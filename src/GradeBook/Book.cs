@@ -8,6 +8,12 @@ namespace GradeBook
     //should be in its dedicated file
     public class NamedObject
     {
+        //constructor
+        public NamedObject(string name)
+        {
+            //Every Object that inherits from NamedObject have to provide name in constructor
+            Name = name;
+        }
         //property
         public string Name
         {
@@ -18,7 +24,7 @@ namespace GradeBook
     public class Book : NamedObject
     {
         //constructor
-        public Book(string name)
+        public Book(string name) : base(name)
         {
             grades = new List<double>();
             //on this object I want to set field parameter
