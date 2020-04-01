@@ -11,8 +11,7 @@ namespace GradeBook
             
             var book = new Book("Duri's Grade Book");
             //subscribe to event
-            book.GradeAdded += OnGradeAdded;
-            book.GradeAdded += OnGradeAdded;
+            book.GradeAdded += OnGradeAdded;            
             
             while(true){
                 Console.WriteLine("Enter grade or 'q' for quit");
