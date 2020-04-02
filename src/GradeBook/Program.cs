@@ -9,7 +9,7 @@ namespace GradeBook
         {
 
 
-            var book = new InMemoryBook("Duri's Grade Book");
+            IBook book = new DiskBook("Duri's Grade Book");
             //subscribe to event
             book.GradeAdded += OnGradeAdded;
 

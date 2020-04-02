@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace GradeBook
 {
@@ -35,14 +36,32 @@ namespace GradeBook
         {
         }
 
-        public virtual event GradeAddedDelegate GradeAdded;
-
+        public abstract event GradeAddedDelegate GradeAdded;
         public abstract void AddGrade(double grade);
+        public abstract Statistics GetStatistics();
+    }
+    public class DiskBook : Book
+    {
+        public DiskBook(string name) : base(name)
+        {
+            Name = name;
+        }
 
-        public virtual Statistics GetStatistics()
+        public override void AddGrade(double grade)
+        {
+            var gradeFile = File.AppendText($"{this.Name}.txt");
+            gradeFile.WriteLine(grade.ToString());
+            gradeFile.Dispose();
+
+        }
+          
+        public override Statistics GetStatistics()
         {
             throw new NotImplementedException();
         }
+
+        public override event GradeAddedDelegate GradeAdded;
+
     }
     public class InMemoryBook : Book
     {
@@ -53,12 +72,7 @@ namespace GradeBook
             //on this object I want to set field parameter
             Name = name;
         }
-
-        public object GetNumberOfGrades()
-        {
-            return grades.Count;
-        }
-
+        
         public void AddGrade(char letter)
         {
             switch(letter)
@@ -159,23 +173,6 @@ namespace GradeBook
             return result;
         }
         //field
-        private List<double> grades;
-
-        // public string Name
-        // {
-        //     get
-        //     {
-        //         return name;
-        //     }
-        //     set
-        //     {
-        //         if (!string.IsNullOrEmpty(value))
-        //         {
-        //             name = value;
-        //         }
-        //     }
-        // }
-        // private string name;
-        
+        private List<double> grades;        
     }
 }
