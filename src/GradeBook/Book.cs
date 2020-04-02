@@ -49,9 +49,14 @@ namespace GradeBook
 
         public override void AddGrade(double grade)
         {
-            var gradeFile = File.AppendText($"{this.Name}.txt");
-            gradeFile.WriteLine(grade.ToString());
-            gradeFile.Dispose();
+            using(var gradeFile = File.AppendText($"{this.Name}.txt"))
+            {
+                gradeFile.WriteLine(grade.ToString());
+                if(GradeAdded != null)
+                {
+                    GradeAdded(this, new EventArgs());
+                }
+            }
 
         }
           
